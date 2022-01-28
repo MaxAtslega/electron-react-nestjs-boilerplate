@@ -4,22 +4,16 @@ import path from 'path'
 import { app, BrowserWindow, Menu, Tray } from 'electron'
 import * as url from 'url'
 
-import { INestApplication, ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
 
-import { AppModule } from './src/backend/app.module'
 import randomString from './src/utils/randomString'
-import { HttpFilter } from './src/backend/util/http.filter'
-import { LoggingInterceptor } from './src/backend/util/logging.interceptor'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import Store from 'electron-store'
+import createNest from './src/backend/main.backend'
 
 const store = new Store()
 
 const TRAY_TOOL_TIP = 'Electron-React-NestJS Boilerplate'
 
 let mainWindow: BrowserWindow | null = null
-let appNest: INestApplication | null = null
 let tray: Tray | null = null
 
 
@@ -128,39 +122,9 @@ function createTray(mainWindow: BrowserWindow) {
   return nTray
 }
 
-const createNest = async () => {
-  appNest = await NestFactory.create(AppModule)
-  appNest.enableCors()
-
-  appNest.useGlobalPipes(new ValidationPipe())
-  appNest.useGlobalFilters(new HttpFilter())
-  appNest.useGlobalInterceptors(new LoggingInterceptor())
-
-  const options = new DocumentBuilder()
-    .setTitle('electron-react-nestjs-boilerplate')
-    .addServer('http://'+store.get('address')+':'+store.get('port'))
-    .addSecurity('bearer', {
-      type: 'http',
-      scheme: 'bearer',
-    }).build()
-  const document = SwaggerModule.createDocument(appNest, options)
-
-  SwaggerModule.setup('', appNest, document)
-
-  await appNest.listen(store.get('port') ?  Number(store.get('port')) : 8080)
-}
-
 app.whenReady().then(async () => {
   await createWindow()
   await createNest()
-})
-
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the health quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
 })
 
 app.on('activate', async () => {
