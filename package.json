@@ -77,7 +77,7 @@
     "commitizen": "4.2.4",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
-    "electron": "13.1.9",
+    "electron": "13.6.8",
     "electron-builder": "22.11.7",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
