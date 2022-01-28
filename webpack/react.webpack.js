@@ -23,7 +23,9 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(rootPath, 'dist/renderer'),
+    static: {
+      directory: path.join(rootPath, 'dist/renderer')
+    },
     historyApiFallback: true,
     compress: true,
     hot: true,
