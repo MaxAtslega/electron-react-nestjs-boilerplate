@@ -99,7 +99,7 @@
     "regenerator-runtime": "0.13.9",
     "rimraf": "3.0.2",
     "rxjs": "7.3.0",
-    "supertest": "6.1.5",
+    "supertest": "6.2.2",
     "ts-jest": "27.0.4",
     "ts-loader": "9.2.5",
     "ts-node": "10.2.0",
