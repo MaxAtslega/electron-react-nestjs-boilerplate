@@ -32,7 +32,7 @@
     "@nestjs/swagger": "^5.0.9",
     "@nestjs/testing": "^8.0.6",
     "class-transformer": "^0.4.0",
-    "class-validator": "^0.13.1",
+    "class-validator": "^0.14.0",
     "core-js": "^3.16.0",
     "electron-store": "^8.0.0",
     "moment": "^2.29.1",
